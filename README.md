@@ -8,8 +8,6 @@ A question-answering app built on **Ollama, Llama 3.2, LangChain, LangGraph, RAG
 
 You upload a small PDF or text file. The app chunks it, embeds the chunks, and stores them in a local vector database (Chroma). You then ask questions about the document in a chat UI. A LangGraph workflow retrieves the most relevant chunks and asks a locally-running Llama 3.2 model (via Ollama) to answer using only that context. The answer is shown along with the source chunks it came from.
 
-Nothing leaves your machine — there is no cloud LLM call anywhere in this project.
-
 ---
 
 ## 2. Architecture
