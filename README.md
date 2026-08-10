@@ -1,6 +1,6 @@
 # LocalDoc AI
 
-A small, educational document question-answering app built to learn **Ollama, Llama 3.2, LangChain, LangGraph, RAG, embeddings, and vector databases** — end to end, across a React + Spring Boot + FastAPI stack. It is intentionally small: no cloud APIs, no auth, no message queues, no Kubernetes.
+A question-answering app built on **Ollama, Llama 3.2, LangChain, LangGraph, RAG, embeddings, and vector databases** — end to end, across a React + Spring Boot + FastAPI stack.
 
 ---
 
@@ -197,13 +197,11 @@ Example chat response:
 
 ---
 
-## 8. How I would explain this project in an interview
+## 8. Project Explanation
 
 "LocalDoc AI is a small RAG application I built to learn how retrieval-augmented generation and LangGraph work in practice, without relying on any cloud LLM API. It's a three-tier stack: a React frontend, a Spring Boot API layer, and a Python FastAPI service that does all the AI work.
 
-When a user uploads a document, the Python service loads it with LangChain, splits it into overlapping chunks, embeds each chunk with a local embedding model served by Ollama, and stores the vectors in Chroma, a local vector database. When the user asks a question, I run a LangGraph workflow with two nodes: a `retrieve` node that does a similarity search against Chroma for the top-3 relevant chunks, and a `generate` node that stuffs those chunks into a prompt and asks Llama 3.2 — also running locally through Ollama — to answer using only that context. The graph's state is a typed dict carrying the question, the retrieved context, and the final answer as it flows through the two nodes.
-
-Spring Boot deliberately has no AI logic — it just validates requests and forwards them to the Python service, which is a realistic pattern for teams that want a JVM-based API layer in front of a specialized Python AI microservice. I kept the whole project intentionally small — no auth, no message queues, no cloud services — so I could focus entirely on understanding the RAG and LangGraph mechanics rather than infrastructure."
+When a user uploads a document, the Python service loads it with LangChain, splits it into overlapping chunks, embeds each chunk with a local embedding model served by Ollama, and stores the vectors in Chroma, a local vector database. When the user asks a question, I run a LangGraph workflow with two nodes: a `retrieve` node that does a similarity search against Chroma for the top-3 relevant chunks, and a `generate` node that stuffs those chunks into a prompt and asks Llama 3.2 — also running locally through Ollama — to answer using only that context. The graph's state is a typed dict carrying the question, the retrieved context, and the final answer as it flows through the two nodes."
 
 ---
 
