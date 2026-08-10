@@ -1,0 +1,36 @@
+LocalDoc AI Project Overview
+
+LocalDoc AI is a small educational application that demonstrates how to build
+a Retrieval-Augmented Generation (RAG) system using local, open-source tools.
+The main purpose of this document is to give the LocalDoc AI application
+something to answer questions about.
+
+What LocalDoc AI does:
+LocalDoc AI lets a user upload a document, such as this text file or a PDF.
+The Python AI service splits the document into small chunks, converts each
+chunk into a numeric vector using an embedding model, and stores those
+vectors in a local vector database called Chroma. When the user asks a
+question, the system searches Chroma for the chunks whose vectors are most
+similar to the question, and passes those chunks to a locally running large
+language model, Llama 3.2, through Ollama. The model then answers the
+question using only that retrieved context.
+
+Why local models matter:
+LocalDoc AI does not call any cloud AI provider. Every model, from the
+embedding model to the chat model, runs on the user's own machine through
+Ollama. This keeps the project free to run, keeps documents private, and
+makes it a good learning example for understanding how local LLM inference
+works end to end.
+
+How the pieces fit together:
+The React frontend sends requests to a Spring Boot backend. The backend
+forwards those requests to the Python AI service. The Python service uses
+LangChain to load, split, embed, and retrieve document chunks, and uses
+LangGraph to run a small two-step workflow: first retrieve relevant chunks,
+then generate an answer from them.
+
+Example questions you can ask about this document:
+- What is the main purpose of this document?
+- What does LocalDoc AI do?
+- Why does LocalDoc AI use local models instead of cloud AI providers?
+- How does the Python service fit into the architecture?

@@ -1,0 +1,108 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f4f5f7;
+  color: #1a1a1a;
+}
+
+.app {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.panel {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+}
+
+.upload-row,
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input-row input {
+  flex: 1;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: #2563eb;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+button:disabled {
+  background: #9ab3e8;
+  cursor: not-allowed;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.document-list {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.muted {
+  color: #777;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.chat-message {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: #f0f2f5;
+}
+
+.chat-message.user {
+  background: #e6efff;
+}
+
+.source-list {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.source-list ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+
+.error-banner {
+  background: #fdecea;
+  color: #b3261e;
+  border: 1px solid #f5c2c0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
