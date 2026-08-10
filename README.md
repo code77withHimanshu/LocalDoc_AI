@@ -193,7 +193,7 @@ Example chat response:
 
 ## 8. Project Explanation
 
-"LocalDoc AI is a small RAG application I built to learn how retrieval-augmented generation and LangGraph work in practice, without relying on any cloud LLM API. It's a three-tier stack: a React frontend, a Spring Boot API layer, and a Python FastAPI service that does all the AI work.
+"LocalDoc AI is a RAG application on how retrieval-augmented generation and LangGraph work in practice, without relying on any cloud LLM API. It's a three-tier stack: a React frontend, a Spring Boot API layer, and a Python FastAPI service that does all the AI work.
 
 When a user uploads a document, the Python service loads it with LangChain, splits it into overlapping chunks, embeds each chunk with a local embedding model served by Ollama, and stores the vectors in Chroma, a local vector database. When the user asks a question, I run a LangGraph workflow with two nodes: a `retrieve` node that does a similarity search against Chroma for the top-3 relevant chunks, and a `generate` node that stuffs those chunks into a prompt and asks Llama 3.2 — also running locally through Ollama — to answer using only that context. The graph's state is a typed dict carrying the question, the retrieved context, and the final answer as it flows through the two nodes."
 
