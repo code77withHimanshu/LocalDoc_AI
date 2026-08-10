@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
         // Allows the Vite dev server (React frontend) to call this API directly.
         registry.addMapping("/api/**")
                 .allowedOrigins("http://localhost:5173")
-                .allowedMethods("GET", "POST");
+                .allowedMethods("GET", "POST", "DELETE");
     }
 
     @Bean
