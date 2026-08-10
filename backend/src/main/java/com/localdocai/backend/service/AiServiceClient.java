@@ -58,4 +58,8 @@ public class AiServiceClient {
     public ChatResponse chat(ChatRequest request) {
         return restTemplate.postForObject(aiServiceUrl + "/chat", request, ChatResponse.class);
     }
+
+    public void deleteDocument(String filename) {
+        restTemplate.delete(aiServiceUrl + "/documents/{filename}", filename);
+    }
 }

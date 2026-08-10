@@ -20,6 +20,10 @@ export async function fetchDocuments() {
   return response.data.documents;
 }
 
+export async function deleteDocument(filename) {
+  await api.delete(`/documents/${encodeURIComponent(filename)}`);
+}
+
 export async function askQuestion(question) {
   const response = await api.post("/chat", { question });
   return response.data;

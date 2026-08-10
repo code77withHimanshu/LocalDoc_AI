@@ -101,3 +101,16 @@ def list_uploaded_documents() -> list[str]:
     if not os.path.isdir(DOCUMENTS_DIR):
         return []
     return sorted(os.listdir(DOCUMENTS_DIR))
+
+
+def delete_document(filename: str) -> bool:
+    """Removes a document's chunks from Chroma (matched by the "source"
+    metadata set during ingestion) and deletes its file from disk. Returns
+    False if the document doesn't exist."""
+    file_path = os.path.join(DOCUMENTS_DIR, filename)
+    if not os.path.isfile(file_path):
+        return False
+
+    vector_store.delete(where={"source": filename})
+    os.remove(file_path)
+    return True

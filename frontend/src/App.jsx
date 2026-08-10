@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ChatWindow from "./components/ChatWindow.jsx";
 import DocumentList from "./components/DocumentList.jsx";
 import DocumentUpload from "./components/DocumentUpload.jsx";
-import { fetchDocuments } from "./services/api.js";
+import { deleteDocument, fetchDocuments } from "./services/api.js";
 
 export default function App() {
   const [documents, setDocuments] = useState([]);
@@ -13,6 +13,15 @@ export default function App() {
       setDocuments(await fetchDocuments());
     } catch {
       setError("Could not reach the backend. Is it running?");
+    }
+  }
+
+  async function handleDelete(name) {
+    try {
+      await deleteDocument(name);
+      await loadDocuments();
+    } catch (err) {
+      setError(err.response?.data?.error || "Failed to remove document");
     }
   }
 
@@ -31,7 +40,7 @@ export default function App() {
       )}
 
       <DocumentUpload onUploaded={loadDocuments} onError={setError} />
-      <DocumentList documents={documents} />
+      <DocumentList documents={documents} onDelete={handleDelete} />
       <ChatWindow hasDocuments={documents.length > 0} onError={setError} />
     </div>
   );

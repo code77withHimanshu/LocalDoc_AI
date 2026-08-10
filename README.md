@@ -178,6 +178,9 @@ curl -X POST http://localhost:8080/api/documents \
 # List uploaded documents
 curl http://localhost:8080/api/documents
 
+# Remove a document (deletes its file and its chunks from Chroma)
+curl -X DELETE http://localhost:8080/api/documents/sample.txt
+
 # Ask a question
 curl -X POST http://localhost:8080/api/chat \
   -H "Content-Type: application/json" \

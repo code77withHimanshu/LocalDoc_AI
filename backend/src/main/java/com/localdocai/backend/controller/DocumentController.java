@@ -4,6 +4,7 @@ import com.localdocai.backend.service.AiServiceClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +38,20 @@ public class DocumentController {
     public ResponseEntity<?> list() {
         try {
             return ResponseEntity.ok(aiServiceClient.listDocuments());
+        } catch (RestClientException e) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                    .body(Map.of("error", "AI service unavailable: " + e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/{filename}")
+    public ResponseEntity<?> delete(@PathVariable String filename) {
+        try {
+            aiServiceClient.deleteDocument(filename);
+            return ResponseEntity.ok(Map.of("filename", filename, "deleted", true));
+        } catch (HttpClientErrorException.NotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", "Document not found: " + filename));
         } catch (RestClientException e) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(Map.of("error", "AI service unavailable: " + e.getMessage()));

@@ -15,7 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from models import ChatRequest, ChatResponse, DocumentsResponse, UploadResponse
 from rag.graph import run_qa
-from rag.ingest import DOCUMENTS_DIR, ingest_document, list_uploaded_documents
+from rag.ingest import DOCUMENTS_DIR, delete_document, ingest_document, list_uploaded_documents
 
 app = FastAPI(title="LocalDoc AI - Python AI Service")
 
@@ -56,6 +56,13 @@ async def upload_document(file: UploadFile = File(...)):
 @app.get("/documents", response_model=DocumentsResponse)
 async def get_documents():
     return DocumentsResponse(documents=list_uploaded_documents())
+
+
+@app.delete("/documents/{filename}")
+async def remove_document(filename: str):
+    if not delete_document(filename):
+        raise HTTPException(status_code=404, detail=f"Document '{filename}' not found")
+    return {"filename": filename, "deleted": True}
 
 
 @app.post("/chat", response_model=ChatResponse)
