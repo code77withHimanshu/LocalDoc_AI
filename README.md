@@ -28,8 +28,6 @@ FastAPI  (the AI service - all the LangChain/LangGraph logic lives here)
    +-- Ollama -> Llama 3.2   (local LLM, runs on the host machine)
 ```
 
-Spring Boot has **no AI logic** — it only validates requests and forwards them. All RAG/LangChain/LangGraph work happens in the Python service. This mirrors a common real-world pattern: a JVM backend that talks to a specialized Python AI microservice instead of reimplementing AI tooling in Java.
-
 ---
 
 ## 3. Setup
@@ -47,8 +45,6 @@ ollama serve            # if not already running
 ollama pull llama3.2         # the chat/generation model
 ollama pull nomic-embed-text  # the embedding model
 ```
-
-**Why a different embedding model than Llama 3.2?** Llama 3.2 is a general-purpose chat model, not trained to produce high-quality embedding vectors. `nomic-embed-text` is a small model built specifically for embeddings — it's faster and gives better retrieval quality than repurposing a chat model for that job. This is standard practice even with cloud providers (e.g. OpenAI ships separate chat and embedding models too).
 
 ### 3.2 Python AI service
 
@@ -128,7 +124,6 @@ Every stage of the pipeline is an explicit, separately-callable LangChain compon
 | Prompt Template | `ChatPromptTemplate.from_template(...)` |
 | LLM | `ChatOllama` |
 
-Nothing is hidden behind a single "magic" chain call — you can trace each arrow in the diagram above directly to a function.
 
 ---
 
@@ -161,8 +156,6 @@ graph.add_edge(START, "retrieve")
 graph.add_edge("retrieve", "generate")
 graph.add_edge("generate", END)
 ```
-
-This is deliberately the simplest possible graph — two nodes, no branching, no loops, no agents — to make the core LangGraph concepts (state, nodes, edges, compiling, invoking) easy to see without extra machinery.
 
 ---
 
@@ -294,10 +287,3 @@ Document loaders, text splitting/chunking, embeddings, vector stores, retrievers
 
 Typed graph state, defining nodes as plain functions, wiring nodes with edges, `START`/`END`, compiling a graph, and invoking a compiled graph.
 
-## 16. What to learn next
-
-- Add a metadata filter to retrieval (e.g. restrict search to one uploaded document).
-- Try a different chunking strategy (semantic chunking) and compare answer quality.
-- Add a third LangGraph node, e.g. a "grade documents" step that decides whether retrieved context is actually relevant before generating.
-- Swap Chroma for another local vector store (e.g. FAISS) to see how little application code needs to change.
-- Stream the LLM's answer token-by-token to the frontend instead of waiting for the full response.
